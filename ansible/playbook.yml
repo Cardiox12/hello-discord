@@ -14,6 +14,7 @@
       community.docker.docker_login:
         registry: "{{ REGISTRY }}"
         password: "{{ SECRET_KEY }}"
+        state: absent
         
     - name: Pull docker image
       community.docker.docker_image:
