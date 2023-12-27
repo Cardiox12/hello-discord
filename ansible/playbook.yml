@@ -19,8 +19,7 @@
         state: present
 
     - name: Pull new docker image version
-      community.docker.docker_image:
-        name: "{{ FULL_IMAGE_NAME }}"
+      command: docker pull "{{ FULL_IMAGE_NAME }}"
 
     - name: Remove docker container
       command: docker container stop "{{ IMAGE_NAME }}"
