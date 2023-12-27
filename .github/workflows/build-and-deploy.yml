@@ -9,17 +9,30 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      REGISTRY: ${{ secrets.SCW_REGISTRY }}
+      IMAGE_NAME: hello-discord
+      SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
+      TAG: latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Build and push Docker image
-        env:
-          REGISTRY: ${{ secrets.SCW_REGISTRY }}
-          IMAGE_NAME: hello-discord
-          SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
-          TAG: latest
         run: |
           docker login "$REGISTRY" -u nologin --password-stdin <<< "$SECRET_KEY"
           docker buildx create --use
           docker buildx build -t $REGISTRY/$IMAGE_NAME:$TAG --push .
+
+      - name: Deploy image on server
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          directory: ./ansible
+          playbook: playbook.yml
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          inventory: ${{ secrets.INVENTORY }}
+          
+
+          
+

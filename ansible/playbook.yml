@@ -1,0 +1,36 @@
+---
+- name: Deploy docker image
+  hosts: all
+  become: yes
+  vars:
+    REGISTRY: "{{ lookup('ansible.builtin.env', 'REGISTRY') }}"
+    SECRET_KEY: "{{ lookup('ansible.builtin.env', 'SECRET_KEY') }}"
+    IMAGE_NAME: "{{ lookup('ansible.builtin.env', 'IMAGE_NAME') }}"
+    TAG: "{{ lookup('ansible.builtin.env', 'TAG') }}"
+    FULL_IMAGE_NAME: "{{ REGISTRY }}/{{ IMAGE_NAME }}:{{ TAG }}"
+
+  tasks:
+    - name: Login to docker registry
+      community.docker.docker_login:
+        registry: "{{ REGISTRY }}"
+        password: "{{ SECRET_KEY }}"
+        
+    - name: Pull docker image
+      community.docker.docker_image:
+        name: "{{ FULL_IMAGE_NAME }}"
+        state: present
+    
+    - name: Stop and remove existing container
+      community.docker.docker_container:
+        name: "{{ IMAGE_NAME }}"
+        state: absent
+      ignore_errors: yes
+    
+    - name: Run docker container
+      community.docker.docker_container:  
+        image: "{{ FULL_IMAGE_NAME }}"
+        state: started
+        ports:
+          - "8080:8080"
+        restart_policy: always
+      
