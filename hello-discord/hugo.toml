@@ -1,4 +1,4 @@
-baseURL = 'https://163.172.158.193'
+baseURL = 'http://163.172.158.193'
 languageCode = 'en-us'
 title = 'Hello Discord'
 theme = 'ananke'
