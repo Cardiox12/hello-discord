@@ -15,22 +15,13 @@
         registry: "{{ REGISTRY }}"
         password: "{{ SECRET_KEY }}"
         state: absent
-        
-    - name: Pull docker image
-      community.docker.docker_image:
-        name: "{{ FULL_IMAGE_NAME }}"
-        state: present
-    
-    - name: Stop and remove existing container
-      community.docker.docker_container:
-        name: "{{ IMAGE_NAME }}"
-        state: absent
-      ignore_errors: yes
-    
+
     - name: Run docker container
       community.docker.docker_container:  
         image: "{{ FULL_IMAGE_NAME }}"
-        state: started
+        state: present
+        recreate: yes
+        pull: true
         ports:
           - "8080:8080"
         restart_policy: always
