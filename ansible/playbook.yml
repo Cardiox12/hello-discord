@@ -20,9 +20,7 @@
     - name: Remove running container
       community.docker.docker_container:
         name: "{{ IMAGE_NAME }}"
-        state: stopped
-        remove: yes
-      ignore_errors: yes
+        state: absent
 
     - name: Run docker container
       community.docker.docker_container:  
