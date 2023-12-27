@@ -21,7 +21,6 @@
       community.docker.docker_container:  
         image: "{{ FULL_IMAGE_NAME }}"
         name: "{{ IMAGE_NAME }}"
-        command: hugo-official server -D --bind=0.0.0.0 -p 8080
         state: present
         recreate: yes
         pull: true
