@@ -14,7 +14,7 @@
       community.docker.docker_login:
         registry: "{{ REGISTRY }}"
         password: "{{ SECRET_KEY }}"
-        username: ""
+        username: "nologin"
         state: present
 
     - name: Run docker container
