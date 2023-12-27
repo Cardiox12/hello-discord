@@ -19,6 +19,7 @@
     - name: Run docker container
       community.docker.docker_container:  
         image: "{{ FULL_IMAGE_NAME }}"
+        name: "{{ IMAGE_NAME }}"
         state: present
         recreate: yes
         pull: true
