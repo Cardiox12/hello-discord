@@ -14,7 +14,7 @@
       community.docker.docker_login:
         registry: "{{ REGISTRY }}"
         password: "{{ SECRET_KEY }}"
-        state: absent
+        state: present
 
     - name: Run docker container
       community.docker.docker_container:  
