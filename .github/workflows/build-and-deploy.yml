@@ -5,15 +5,16 @@ on:
     branches:
       - main
 
+env:
+  REGISTRY: ${{ secrets.SCW_REGISTRY }}
+  IMAGE_NAME: hello-discord
+  SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
+  TAG: latest
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      REGISTRY: ${{ secrets.SCW_REGISTRY }}
-      IMAGE_NAME: hello-discord
-      SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
-      TAG: latest
 
     steps:
       - name: Checkout repository
@@ -25,6 +26,10 @@ jobs:
           docker buildx create --use
           docker buildx build -t $REGISTRY/$IMAGE_NAME:$TAG --push .
 
+  deployment:
+    runs-on: ubuntu-latest
+    
+    steps:
       - name: Deploy image on server
         uses: dawidd6/action-ansible-playbook@v2
         with:
