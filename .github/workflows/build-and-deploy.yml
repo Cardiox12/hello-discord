@@ -28,8 +28,11 @@ jobs:
 
   deployment:
     runs-on: ubuntu-latest
-    
+    needs: build
+
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Deploy image on server
         uses: dawidd6/action-ansible-playbook@v2
         with:
