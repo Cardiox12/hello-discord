@@ -44,8 +44,5 @@ jobs:
           # inventory: |
           #   [all]
           #   163.172.158.193 ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_user=root
-          options: |
-            --verbose
-
           
 
