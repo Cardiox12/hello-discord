@@ -17,12 +17,20 @@
         username: "nologin"
         state: present
 
+    - name: Remove running container
+      community.docker.docker_container:
+        name: "{{ IMAGE_NAME }}"
+        state: stopped
+        remove: yes
+      ignore_errors: yes
+
     - name: Run docker container
       community.docker.docker_container:  
         image: "{{ FULL_IMAGE_NAME }}"
         name: "{{ IMAGE_NAME }}"
         state: present
         recreate: yes
+        cleanup: yes
         pull: true
         ports:
           - "8080:8080"
