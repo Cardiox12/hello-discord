@@ -2,6 +2,7 @@
 - name: Deploy docker image
   hosts: all
   become: yes
+
   vars:
     REGISTRY: "{{ lookup('ansible.builtin.env', 'REGISTRY') }}"
     SECRET_KEY: "{{ lookup('ansible.builtin.env', 'SECRET_KEY') }}"
@@ -22,23 +23,4 @@
       ignore_errors: true
 
     - name: Run dokcer container
-      command: docker run -it -d --rm -p 8080:8080 --name "{{ IMAGE_NAME }}" "{{ FULL_IMAGE_NAME }}"
-    # - name: Remove running container
-    #   community.docker.docker_container:
-    #     name: "{{ IMAGE_NAME }}"
-    #     state: absent
-
-    # - name: Run docker container
-    #   community.docker.docker_container:  
-    #     image: "{{ FULL_IMAGE_NAME }}"
-    #     name: "{{ IMAGE_NAME }}"
-    #     state: present
-    #     recreate: yes
-    #     cleanup: yes
-    #     pull: true
-    #     exposed_ports:
-    #       - 8080
-    #     ports:
-    #       - "0.0.0.0:8080:8080"
-    #     restart_policy: always
-      
+      command: docker run -it -d --rm -p 80:8080 --name "{{ IMAGE_NAME }}" "{{ FULL_IMAGE_NAME }}"
