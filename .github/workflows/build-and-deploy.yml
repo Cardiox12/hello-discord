@@ -1,0 +1,25 @@
+name: Build and Deploy docker image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build and push Docker image
+        env:
+          REGISTRY: ${{ secrets.SCW_REGISTRY }}
+          IMAGE_NAME: hello-discord
+          SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
+          TAG: latest
+        run: |
+          docker login "$REGISTRY" -u nologin --password-stdin <<< "$SECRET_KEY"
+          docker buildx create --use
+          docker buildx build -t $REGISTRY/$IMAGE_NAME:$TAG --push .
