@@ -1,6 +1,6 @@
 FROM klakegg/hugo
 
-COPY hello-discord /src
+COPY ./hello-discord/. /src
 
 WORKDIR /src
 
