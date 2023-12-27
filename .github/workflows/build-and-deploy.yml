@@ -31,8 +31,10 @@ jobs:
           directory: ./ansible
           playbook: playbook.yml
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          inventory: ${{ secrets.INVENTORY }}
-          
+          inventory: |
+            [all]
+            163.172.158.193 ansible_ssh_common_args='-o StrictHostKeyChecking=no' remote_user=root
+
 
           
 
