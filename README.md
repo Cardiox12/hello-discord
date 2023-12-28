@@ -1,6 +1,5 @@
 # Présentation - Comment déployer un blog
 
-
 ## Introduction
 
 1. Expliquer les outils qu'on va utiliser
