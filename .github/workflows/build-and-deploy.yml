@@ -34,15 +34,24 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      
+      # On utilise le github action https://github.com/marketplace/actions/run-ansible-playbook
       - name: Deploy image on server
         uses: dawidd6/action-ansible-playbook@v2
         with:
+          # Va chercher les fichiers ansible dans le dossier `./ansible`
           directory: ./ansible
+
+          # Exécutes le playbook `playbook.yml`
           playbook: playbook.yml
+
+          # La private key du server
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+          # Cherche le INVENTORY
           inventory: ${{ secrets.INVENTORY }}
+          # Contenu du INVENTORY
           # inventory: |
-          #   [all]
-          #   163.172.158.193 ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_user=root
+          #   <IP> ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_user=root
           
 

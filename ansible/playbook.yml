@@ -25,5 +25,5 @@
       command: docker container stop "{{ IMAGE_NAME }}"
       ignore_errors: true
 
-    - name: Run dokcer container
+    - name: Run docker container
       command: docker run -it -d --rm -p 80:8080 --name "{{ IMAGE_NAME }}" "{{ FULL_IMAGE_NAME }}"
